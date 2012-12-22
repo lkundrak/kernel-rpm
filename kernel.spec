@@ -2368,6 +2368,9 @@ fi
 #                 ||----w |
 #                 ||     ||
 %changelog
+* Sun Jan 27 2013 Lubomir Rintel <lkundrak@v3.sk>
+- arm: enable kdump
+
 * Fri Jan 25 2013 Justin M. Forbes <jforbes@redhat.com>
 - Turn off THP for 32bit
 
