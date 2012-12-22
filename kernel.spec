@@ -32,6 +32,7 @@ Summary: The Linux kernel
 # (Uncomment the '#' and both spaces below to set the buildid.)
 #
 # % define buildid .local
+%define buildid .lrdump1
 ###################################################################
 
 # The buildid can also be specified on the rpmbuild command line
