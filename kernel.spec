@@ -2370,6 +2370,7 @@ fi
 %changelog
 * Sun Jan 27 2013 Lubomir Rintel <lkundrak@v3.sk>
 - arm: enable kdump
+- arm: compile MTD into kernel to make cmdparts work
 
 * Fri Jan 25 2013 Justin M. Forbes <jforbes@redhat.com>
 - Turn off THP for 32bit
