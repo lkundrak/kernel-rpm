@@ -796,6 +796,7 @@ Patch21239: orion_wdt-Add-platform-alias.patch
 # Fix btmrvl_sdio firmware loading https://lkml.org/lkml/2013/1/8/610
 Patch21240: btmrvl_sdio-load-firmware-from-the-location-where-th.patch
 
+Patch90001: 0001-add-Marvell-88W8688-support-to-libertas_sdio.patch
 %endif
 
 BuildRoot: %{_tmppath}/kernel-%{KVERREL}-root
@@ -1521,6 +1522,8 @@ ApplyPatch orion_wdt-Add-platform-alias.patch
 
 # Fix btmrvl_sdio firmware loading https://lkml.org/lkml/2013/1/8/610
 ApplyPatch btmrvl_sdio-load-firmware-from-the-location-where-th.patch
+
+ApplyPatch 0001-add-Marvell-88W8688-support-to-libertas_sdio.patch
 # END OF PATCH APPLICATIONS
 
 %endif
