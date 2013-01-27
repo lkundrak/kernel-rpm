@@ -799,6 +799,8 @@ Patch21240: btmrvl_sdio-load-firmware-from-the-location-where-th.patch
 Patch90001: 0001-add-Marvell-88W8688-support-to-libertas_sdio.patch
 Patch90003: 0003-mtd-cmdlinepart-Make-it-into-a-module.patch
 Patch90004: 0004-mtd-Allow-removal-of-partitioning-modules.patch
+Patch90008: 0008-LR-libertas-sdio-Use-larger-block-size-for-firmware-.patch
+Patch90011: 0011-LR-libertas-sdio-remove-CMD_FUNC_INIT-call.patch
 %endif
 
 BuildRoot: %{_tmppath}/kernel-%{KVERREL}-root
@@ -1528,6 +1530,8 @@ ApplyPatch btmrvl_sdio-load-firmware-from-the-location-where-th.patch
 ApplyPatch 0001-add-Marvell-88W8688-support-to-libertas_sdio.patch
 ApplyPatch 0003-mtd-cmdlinepart-Make-it-into-a-module.patch
 ApplyPatch 0004-mtd-Allow-removal-of-partitioning-modules.patch
+ApplyPatch 0008-LR-libertas-sdio-Use-larger-block-size-for-firmware-.patch
+ApplyPatch 0011-LR-libertas-sdio-remove-CMD_FUNC_INIT-call.patch
 # END OF PATCH APPLICATIONS
 
 %endif

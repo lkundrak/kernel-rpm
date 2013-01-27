@@ -1,0 +1,29 @@
+From 6ceb931a68f0fb8cb8b339c79d8cd216fbee3f37 Mon Sep 17 00:00:00 2001
+From: Lubomir Rintel <lkundrak@v3.sk>
+Date: Mon, 14 Jan 2013 02:41:00 +0100
+Subject: [PATCH 08/11] LR: libertas sdio: Use larger block size for firmware download
+
+Otherwise firmware download fails with a CRC error on 8688 present in GuruPlug.
+This is exactly the same thing driver shipped with the device does:
+
+https://github.com/lkundrak/linux/tree/libertas_uap
+---
+ drivers/net/wireless/libertas/if_sdio.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/drivers/net/wireless/libertas/if_sdio.c b/drivers/net/wireless/libertas/if_sdio.c
+index be16a76..dab7097 100644
+--- a/drivers/net/wireless/libertas/if_sdio.c
++++ b/drivers/net/wireless/libertas/if_sdio.c
+@@ -583,7 +583,7 @@ static int if_sdio_prog_real(struct if_sdio_card *card,
+ 
+ 	sdio_claim_host(card->func);
+ 
+-	ret = sdio_set_block_size(card->func, 32);
++	ret = sdio_set_block_size(card->func, 256);
+ 	if (ret)
+ 		goto release;
+ 
+-- 
+1.7.1
+
