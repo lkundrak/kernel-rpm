@@ -1,0 +1,26 @@
+From 112222a06583531e0093bb2879c1d937497b3c83 Mon Sep 17 00:00:00 2001
+From: Lubomir Rintel <lkundrak@v3.sk>
+Date: Thu, 3 Jan 2013 20:15:18 +0100
+Subject: [PATCH 02/11] orion_wdt: Add platform alias
+
+...so that it's automatically picked up on relevant platforms.
+Tested on Kirkwood-based GuruPlug.
+
+Signed-off-by: Lubomir Rintel <lkundrak@v3.sk>
+---
+ drivers/watchdog/orion_wdt.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/drivers/watchdog/orion_wdt.c b/drivers/watchdog/orion_wdt.c
+index c20f96b..c9dd66f 100644
+--- a/drivers/watchdog/orion_wdt.c
++++ b/drivers/watchdog/orion_wdt.c
+@@ -223,4 +223,5 @@ MODULE_PARM_DESC(nowayout, "Watchdog cannot be stopped once started (default="
+ 				__MODULE_STRING(WATCHDOG_NOWAYOUT) ")");
+ 
+ MODULE_LICENSE("GPL");
++MODULE_ALIAS("platform:orion_wdt");
+ MODULE_ALIAS_MISCDEV(WATCHDOG_MINOR);
+-- 
+1.7.1
+

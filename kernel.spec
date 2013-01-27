@@ -790,7 +790,8 @@ Patch21237: drm-invalidate-relocation-presumed_offsets-along-slow-patch.patch
 #rhbz 892428
 Patch21238: brcmsmac-updates-rhbz892428.patch
 
-# END OF PATCH DEFINITIONS
+# Fixes watchdog autoload on orion https://patchwork.kernel.org/patch/1933021/
+Patch21239: orion_wdt-Add-platform-alias.patch
 
 %endif
 
@@ -1512,6 +1513,8 @@ ApplyPatch drm-invalidate-relocation-presumed_offsets-along-slow-patch.patch
 #rhbz 892428
 ApplyPatch brcmsmac-updates-rhbz892428.patch
 
+# Fixes watchdog autoload on orion https://patchwork.kernel.org/patch/1933021/
+ApplyPatch orion_wdt-Add-platform-alias.patch
 # END OF PATCH APPLICATIONS
 
 %endif
@@ -2372,6 +2375,7 @@ fi
 - arm: enable kdump
 - arm: compile MTD into kernel to make cmdparts work
 - arm: enable crash driver
+- orion: Fix automatic loading of Orion watchdog driver
 
 * Fri Jan 25 2013 Justin M. Forbes <jforbes@redhat.com>
 - Turn off THP for 32bit
