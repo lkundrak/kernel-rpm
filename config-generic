@@ -193,6 +193,7 @@ CONFIG_MTD=m
 # CONFIG_MTD_TESTS is not set
 # CONFIG_MTD_REDBOOT_PARTS is not set
 # CONFIG_MTD_AR7_PARTS is not set
+CONFIG_MTD_CMDLINE_PARTS=m
 
 #
 # User Modules And Translation Layers
