@@ -801,6 +801,9 @@ Patch90003: 0003-mtd-cmdlinepart-Make-it-into-a-module.patch
 Patch90004: 0004-mtd-Allow-removal-of-partitioning-modules.patch
 Patch90008: 0008-LR-libertas-sdio-Use-larger-block-size-for-firmware-.patch
 Patch90011: 0011-LR-libertas-sdio-remove-CMD_FUNC_INIT-call.patch
+Patch90005: 0005-dma-mv_xor-use-proper-dma-memory-management-function.patch
+Patch90009: 0009-LR-dma-mv_xor-remove-minimal-offload-length-threshol.patch
+Patch90010: 0010-LR-dma-mv_xor-test-for-small-transfers.patch
 %endif
 
 BuildRoot: %{_tmppath}/kernel-%{KVERREL}-root
@@ -1532,6 +1535,9 @@ ApplyPatch 0003-mtd-cmdlinepart-Make-it-into-a-module.patch
 ApplyPatch 0004-mtd-Allow-removal-of-partitioning-modules.patch
 ApplyPatch 0008-LR-libertas-sdio-Use-larger-block-size-for-firmware-.patch
 ApplyPatch 0011-LR-libertas-sdio-remove-CMD_FUNC_INIT-call.patch
+ApplyPatch 0005-dma-mv_xor-use-proper-dma-memory-management-function.patch
+ApplyPatch 0009-LR-dma-mv_xor-remove-minimal-offload-length-threshol.patch
+ApplyPatch 0010-LR-dma-mv_xor-test-for-small-transfers.patch
 # END OF PATCH APPLICATIONS
 
 %endif
