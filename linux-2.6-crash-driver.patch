@@ -1,9 +1,10 @@
-From f72d640713d01b3b704c6e84ab49b62f19fc9c22 Mon Sep 17 00:00:00 2001
+From 5537213276b8b18d76f948487399cc5dfc3d5556 Mon Sep 17 00:00:00 2001
 From: Kyle McMartin <kyle@phobos.i.jkkm.org>
 Date: Tue, 30 Mar 2010 00:16:25 -0400
 Subject: [PATCH] dev-crash-driver.patch
 
 ---
+ arch/arm/include/asm/crash.h  |   66 +++++++++++++++++++++
  arch/ia64/include/asm/crash.h |   90 +++++++++++++++++++++++++++++
  arch/ia64/kernel/ia64_ksyms.c |    3 +
  arch/x86/include/asm/crash.h  |   75 ++++++++++++++++++++++++
@@ -11,11 +12,84 @@ Subject: [PATCH] dev-crash-driver.patch
  drivers/char/Kconfig          |    3 +
  drivers/char/Makefile         |    2 +
  drivers/char/crash.c          |  128 +++++++++++++++++++++++++++++++++++++++++
- 7 files changed, 303 insertions(+), 0 deletions(-)
+ 8 files changed, 369 insertions(+), 0 deletions(-)
+ create mode 100644 arch/arm/include/asm/crash.h
  create mode 100644 arch/ia64/include/asm/crash.h
  create mode 100644 arch/x86/include/asm/crash.h
  create mode 100644 drivers/char/crash.c
 
+diff --git a/arch/arm/include/asm/crash.h b/arch/arm/include/asm/crash.h
+new file mode 100644
+index 0000000..3442394
+--- /dev/null
++++ b/arch/arm/include/asm/crash.h
+@@ -0,0 +1,66 @@
++#ifndef _ASM_ARM_CRASH_H
++#define _ASM_ARM_CRASH_H
++
++/*
++ * linux/include/asm-arm/crash.h
++ *
++ * Copyright (c) 2004 Red Hat, Inc. All rights reserved.
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation; either version 2, or (at your option)
++ * any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
++ *
++ */
++
++#ifdef __KERNEL__
++
++#include <linux/mm.h>
++#include <linux/highmem.h>
++
++static inline void *
++map_virtual(u64 offset, struct page **pp)
++{
++	struct page *page;
++	unsigned long pfn;
++	void *vaddr;
++
++	pfn = (unsigned long)(offset >> PAGE_SHIFT);
++
++	if (!pfn_valid(pfn)) {
++		printk(KERN_INFO
++		    "crash memory driver: invalid pfn: %lx )\n", pfn);
++		return NULL;
++	}
++
++	page = pfn_to_page(pfn);
++
++	vaddr = kmap(page);
++	if (!vaddr) {
++		printk(KERN_INFO
++		    "crash memory driver: pfn: %lx kmap(page: %lx) failed\n",
++			pfn, (unsigned long)page);
++		return NULL;
++	}
++
++	*pp = page;
++	return (vaddr + (offset & (PAGE_SIZE-1)));
++}
++
++static inline void unmap_virtual(struct page *page)
++{
++	kunmap(page);
++}
++
++#endif /* __KERNEL__ */
++
++#endif /* _ASM_ARM_CRASH_H */
 diff --git a/arch/ia64/include/asm/crash.h b/arch/ia64/include/asm/crash.h
 new file mode 100644
 index 0000000..541af84
@@ -113,7 +187,7 @@ index 0000000..541af84
 +
 +#endif /* _ASM_IA64_CRASH_H */
 diff --git a/arch/ia64/kernel/ia64_ksyms.c b/arch/ia64/kernel/ia64_ksyms.c
-index 7f4a0ed..552fe24 100644
+index 5b7791d..aee4b87 100644
 --- a/arch/ia64/kernel/ia64_ksyms.c
 +++ b/arch/ia64/kernel/ia64_ksyms.c
 @@ -84,6 +84,9 @@ EXPORT_SYMBOL(ia64_save_scratch_fpregs);
@@ -208,7 +282,7 @@ index 0000000..dfcc006
 +
 +#endif /* _ASM_I386_CRASH_H */
 diff --git a/arch/x86/mm/ioremap.c b/arch/x86/mm/ioremap.c
-index be1ef57..ac659f7 100644
+index 78fe3f1..ee05d3a 100644
 --- a/arch/x86/mm/ioremap.c
 +++ b/arch/x86/mm/ioremap.c
 @@ -24,6 +24,8 @@
@@ -221,7 +295,7 @@ index be1ef57..ac659f7 100644
   * Fix up the linear direct mapping of the kernel to avoid cache attribute
   * conflicts.
 diff --git a/drivers/char/Kconfig b/drivers/char/Kconfig
-index 423fd56..e04a561 100644
+index 72bedad..f6c8a88 100644
 --- a/drivers/char/Kconfig
 +++ b/drivers/char/Kconfig
 @@ -4,6 +4,9 @@
@@ -235,10 +309,10 @@ index 423fd56..e04a561 100644
  
  config DEVKMEM
 diff --git a/drivers/char/Makefile b/drivers/char/Makefile
-index 32762ba..3d5d525 100644
+index 7ff1d0d..3ed67af 100644
 --- a/drivers/char/Makefile
 +++ b/drivers/char/Makefile
-@@ -65,3 +65,5 @@ obj-$(CONFIG_JS_RTC)		+= js-rtc.o
+@@ -62,3 +62,5 @@ obj-$(CONFIG_JS_RTC)		+= js-rtc.o
  js-rtc-y = rtc.o
  
  obj-$(CONFIG_TILE_SROM)		+= tile-srom.o
@@ -379,5 +453,5 @@ index 0000000..e5437de
 +
 +MODULE_LICENSE("GPL");
 -- 
-1.7.6
+1.7.1
 
