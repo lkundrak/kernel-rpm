@@ -793,6 +793,9 @@ Patch21238: brcmsmac-updates-rhbz892428.patch
 # Fixes watchdog autoload on orion https://patchwork.kernel.org/patch/1933021/
 Patch21239: orion_wdt-Add-platform-alias.patch
 
+# Fix btmrvl_sdio firmware loading https://lkml.org/lkml/2013/1/8/610
+Patch21240: btmrvl_sdio-load-firmware-from-the-location-where-th.patch
+
 %endif
 
 BuildRoot: %{_tmppath}/kernel-%{KVERREL}-root
@@ -1515,6 +1518,9 @@ ApplyPatch brcmsmac-updates-rhbz892428.patch
 
 # Fixes watchdog autoload on orion https://patchwork.kernel.org/patch/1933021/
 ApplyPatch orion_wdt-Add-platform-alias.patch
+
+# Fix btmrvl_sdio firmware loading https://lkml.org/lkml/2013/1/8/610
+ApplyPatch btmrvl_sdio-load-firmware-from-the-location-where-th.patch
 # END OF PATCH APPLICATIONS
 
 %endif
@@ -2376,6 +2382,7 @@ fi
 - arm: compile MTD into kernel to make cmdparts work
 - arm: enable crash driver
 - orion: Fix automatic loading of Orion watchdog driver
+- btmrvl_sdio: fix firmware loading
 
 * Fri Jan 25 2013 Justin M. Forbes <jforbes@redhat.com>
 - Turn off THP for 32bit
